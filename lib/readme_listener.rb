@@ -3,7 +3,14 @@ class ReadmeListener < Redmine::Hook::ViewListener
     repository = context[:project].repository
     return '' if repository.nil? or repository.entries.nil?
     repository.fetch_changesets if Setting.autofetch_changesets?
-    entry = repository.entries.find{|e| e.name =~ /README((\.).*)/}
-    Redmine::WikiFormatting.to_html(Setting.text_formatting, repository.cat(entry.path))
+    entry = repository.entries.find{|e| e.name =~ /README((\.).*)?/}
+    return '' if entry.nil?
+    
+    text = repository.cat(entry.path)
+    formatter_name = '' # name for NullFormatter
+    if File.extname(entry.path) == '.markdown'
+      formatter_name = Redmine::WikiFormatting.format_names.find {|name| name =~ /Markdown/}
+    end
+    Redmine::WikiFormatting.formatter_for(formatter_name).new(text).to_html
   end
 end
