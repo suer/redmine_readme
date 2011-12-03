@@ -11,6 +11,10 @@ class ReadmeListener < Redmine::Hook::ViewListener
     if File.extname(entry.path) == '.markdown'
       formatter_name = Redmine::WikiFormatting.format_names.find {|name| name =~ /Markdown/}
     end
-    Redmine::WikiFormatting.formatter_for(formatter_name).new(text).to_html
+    formatter = Redmine::WikiFormatting.formatter_for(formatter_name).new(text)
+    context[:controller].send(:render_to_string, {
+        :partial => 'readme/left',
+        :locals => {:html => formatter.to_html}
+      })
   end
 end
