@@ -1,6 +1,6 @@
 Redmine README plugin
 ====================================
-A plugin for Redmine that shows README descriptions on each top page of project.
+A Redmine plugin shows readme on each overview page of project.
 
 Author
 ------------------------------
@@ -8,7 +8,7 @@ Author
 
 Install
 ------------------------------
-Type below command:
+Type below commands:
 
     $ cd $RAILS_ROOT/vender/plugins
     $ git clone git://github.com/suer/redmine_readme.git
