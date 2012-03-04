@@ -5,7 +5,7 @@ class ReadmeListener < Redmine::Hook::ViewListener
     repository = context[:project].repository
     return '' if repository.nil? or repository.entries.nil?
     repository.fetch_changesets if Setting.autofetch_changesets?
-    entry = repository.entries.find{|e| e.name =~ /README((\.).*)?/}
+    entry = repository.entries.find{|e| e.name =~ /README((\.).*)?/i}
     return '' if entry.nil?
 
     text = repository.cat(entry.path)
