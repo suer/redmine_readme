@@ -10,7 +10,7 @@ class ReadmeListener < Redmine::Hook::ViewListener
       text = repository.cat(entry.path)
       formatter_name = '' # name for NullFormatter
       if MARKDOWN_EXTENSIONS.include?(File.extname(entry.path))
-        formatter_name = Redmine::WikiFormatting.format_names.find {|name| name =~ /Markdown/}
+        formatter_name = Redmine::WikiFormatting.format_names.find {|name| name =~ /Markdown/i}
       end
       formatter = Redmine::WikiFormatting.formatter_for(formatter_name).new(text)
       html << context[:controller].send(:render_to_string, {
