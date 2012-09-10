@@ -6,6 +6,6 @@ Redmine::Plugin.register :redmine_readme do
   author 'suer'
   description 'display readme in project top pages'
   version '0.0.1'
-  url 'http://example.com/path/to/plugin'
+  url 'https://github.com/suer/redmine_readme'
   author_url 'http://d.hatena.ne.jp/suer/'
 end
