@@ -1,5 +1,8 @@
 Redmine README plugin
-====================================
+==============================
+
+[![Code Climate](https://codeclimate.com/github/suer/redmine_readme.png)](https://codeclimate.com/github/suer/redmine_readme)
+
 A Redmine plugin shows readme on each overview page of project.
 
 Author
