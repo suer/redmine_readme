@@ -3,10 +3,12 @@ class ReadmeListener < Redmine::Hook::ViewListener
 
   def view_projects_show_left(context)
     html = ''
+    repo = nil
     context[:project].repositories.each do |repository|
       next if repository.nil? or repository.entries.nil?
       entry = repository.entries.find{|e| e.name =~ /README((\.).*)?/i}
       next if entry.nil?
+      repo = repository
       text = repository.cat(entry.path)
       formatter_name = '' # name for NullFormatter
       if MARKDOWN_EXTENSIONS.include?(File.extname(entry.path))
@@ -18,6 +20,11 @@ class ReadmeListener < Redmine::Hook::ViewListener
         :locals => {:repository => repository, :html => formatter.to_html}
       })
     end
-    html
+    html.respond_to?(:force_encoding) ? html.force_encoding("utf-8") : html
+  rescue => e
+    context[:controller].send(:render_to_string, {
+      :partial => 'readme/error',
+      :locals => {:repository => repo, :error => e}
+    })
   end
 end
