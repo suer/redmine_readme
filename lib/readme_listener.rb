@@ -20,7 +20,7 @@ class ReadmeListener < Redmine::Hook::ViewListener
         :locals => {:repository => repository, :html => formatter.to_html}
       })
     end
-    html.respond_to?(:force_encoding) ? html.force_encoding("utf-8") : html
+    Redmine::CodesetUtil.to_utf8_by_setting(html)
   rescue => e
     context[:controller].send(:render_to_string, {
       :partial => 'readme/error',
