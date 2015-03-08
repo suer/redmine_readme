@@ -6,7 +6,9 @@ class ReadmeListener < Redmine::Hook::ViewListener
     repo = nil
     context[:project].repositories.each do |repository|
       next if repository.nil? or repository.entries.nil?
-      entry = repository.entries.find{|e| e.name =~ /README((\.).*)?/i}
+      entries = repository.send(:scm_entries)
+      next if entries.nil?
+      entry = entries.find{|e| e.name =~ /README((\.).*)?/i}
       next if entry.nil?
       repo = repository
       text = repository.cat(entry.path)
