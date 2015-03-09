@@ -5,7 +5,10 @@ class ReadmeListener < Redmine::Hook::ViewListener
     html = ''
     repo = nil
     context[:project].repositories.each do |repository|
-      next if repository.nil? or repository.entries.nil?
+      next if repository.nil?
+      def repository.extra_report_last_commit
+        false
+      end if repository.class.method_defined? :extra_report_last_commit
       entries = repository.send(:scm_entries)
       next if entries.nil?
       entry = entries.find{|e| e.name =~ /README((\.).*)?/i}
